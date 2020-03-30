@@ -3,6 +3,12 @@ import matplotlib.pyplot as plt
 import scipy.constants as cst  # for physical constants, type help(cst) for details
 
 
+def gaussian(x, mean, deviation):
+    a = 1/(deviation*np.sqrt(2*np.pi))
+    b = (((x - mean)/deviation)**2)/2
+    return a*np.exp(-b)
+
+
 class Wave:
     def __init__(self):
         """ Constructor for waves """
@@ -58,6 +64,7 @@ class Wave:
         :param t: flt, scalar value
         :return: np array representing the complex wave function of the electron
         """
+        global k_0
         A, B, T, R, K = self.coefficients(V_0, E, a)
         for v in x:
             if v < 0:
@@ -72,8 +79,14 @@ class Wave:
             else:
                 self.z.append(T * np.exp(1j * self.k * v))
 
-        return self.z
+        return gaussian(x, k_0, 1)*self.z
+        # TODO: trouver quel écart-type
+        #  (probablement un qui est défini par la normalisation... => définir à l'avance le # d'ondes dans le paquet?)
 
     def normalize(self):
-
+        """
+        Integrate the density of the function"from -infty to +infty" and divide self.z by the root square of the found value.
+        :return: normalized "self.z"function
+        """
+        # TODO: find the best numerical intergation method
         return self.z

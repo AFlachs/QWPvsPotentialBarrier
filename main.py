@@ -10,10 +10,7 @@ a = 0.10  # Width of the barrier
 x = np.linspace(-x_lim, x_lim + a, 500)
 
 
-def gaussian(x, mean, deviation):
-    a = 1/(deviation*np.sqrt(2*np.pi))
-    b = (((x - mean)/deviation)**2)/2
-    return a*np.exp(-b)
+
 
 
 firstWave = Wave()
